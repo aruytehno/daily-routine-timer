@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     // События для расписания (можно изменить и добавить свои)
     const events = [
-        { name: 'Подъем', start: '08:00', end: '09:00' },
-        { name: 'Дорога до работы', start: '09:00', end: '10:00' },
-        { name: 'Работа', start: '10:00', end: '13:00' },
-        { name: 'Обед', start: '13:00', end: '14:00' },
-        { name: 'Работа', start: '14:00', end: '18:00' },
-        { name: 'Дорога домой', start: '18:00', end: '19:00' },
-        { name: 'Сон', start: '23:59', end: '08:00' }
+        { name: 'До подъема', start: '08:00', end: '09:00' },
+        { name: 'До выхода', start: '09:00', end: '10:00' },
+        { name: 'До работы', start: '10:00', end: '13:00' },
+        { name: 'До обеда', start: '13:00', end: '14:00' },
+        { name: 'До работы', start: '14:00', end: '18:00' },
+        { name: 'До конца рабочего дня', start: '18:00', end: '19:00' },
+        { name: 'До сна', start: '23:59', end: '08:00' }
         // Добавьте свои события здесь
     ];
 
@@ -40,6 +40,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 eventElement.innerHTML = `
                     <span class="event-name">${event.name}</span>
                     <span class="event-time">Время начала: ${event.start}</span>
+                `;
+            } else if (now >= eventStart && now <= eventEnd) {
+                // Текущее событие
+                eventElement.innerHTML = `
+                    <span class="event-name">${event.name}</span>
+                    <span class="event-status">В процессе</span>
                 `;
             } else {
                 // Прошедшее событие
