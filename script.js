@@ -20,10 +20,35 @@ document.addEventListener('DOMContentLoaded', function() {
         events.forEach(event => {
             const eventElement = document.createElement('div');
             eventElement.classList.add('event-item');
-            eventElement.innerHTML = `
-                <span class="event-name">${event.name}</span>
-                <span class="event-time">${event.start} - ${event.end}</span>
-            `;
+
+            const now = new Date();
+            const eventStart = new Date();
+            const eventEnd = new Date();
+
+            const [startHour, startMinute] = event.start.split(':');
+            eventStart.setHours(parseInt(startHour, 10));
+            eventStart.setMinutes(parseInt(startMinute, 10));
+            eventStart.setSeconds(0);
+
+            const [endHour, endMinute] = event.end.split(':');
+            eventEnd.setHours(parseInt(endHour, 10));
+            eventEnd.setMinutes(parseInt(endMinute, 10));
+            eventEnd.setSeconds(0);
+
+            if (now < eventStart) {
+                // Предстоящее событие
+                eventElement.innerHTML = `
+                    <span class="event-name">${event.name}</span>
+                    <span class="event-time">Время начала: ${event.start}</span>
+                `;
+            } else {
+                // Прошедшее событие
+                eventElement.innerHTML = `
+                    <span class="event-name">${event.name}</span>
+                    <span class="event-status">Завершено</span>
+                `;
+            }
+
             eventsContainer.appendChild(eventElement);
         });
     }
