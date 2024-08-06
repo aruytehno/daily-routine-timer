@@ -15,13 +15,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const timerElement = document.getElementById('lazy');
     const eventNameElement = document.getElementById('eventName');
 
+    // Функция для создания и добавления элементов списка событий
+    function renderEvents() {
+        events.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.classList.add('event-item');
+            eventElement.innerHTML = `
+                <span class="event-name">${event.name}</span>
+                <span class="event-time">${event.start} - ${event.end}</span>
+            `;
+            eventsContainer.appendChild(eventElement);
+        });
+    }
+
+    // Функция для обновления текущего события и таймера
     function updateEvents() {
         const now = new Date();
         const currentEvent = getCurrentEvent(now);
         
-        // Очищаем текущий список событий
-        eventsContainer.innerHTML = '';
-
         if (currentEvent) {
             const startTime = new Date();
             const [startHour, startMinute] = currentEvent.start.split(':');
@@ -50,6 +61,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 timerElement.innerText = '00:00:00';
                 eventNameElement.innerText = 'Расписание дня';
             }
+        } else {
+            // Если текущее событие не определено (например, все события завершились), очищаем таймер
+            timerElement.innerText = '00:00:00';
+            eventNameElement.innerText = 'Расписание дня';
         }
     }
 
@@ -64,7 +79,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Обновляем расписание каждую секунду
     setInterval(updateEvents, 1000);
 
-    // Инициализируем первоначальное отображение
+    // Инициализируем первоначальное отображение списка событий
+    renderEvents();
+
+    // Инициализируем первоначальное отображение текущего события и таймера
     updateEvents();
 });
 
