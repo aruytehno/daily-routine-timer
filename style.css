@@ -198,14 +198,14 @@ body {
   }
 }
 
-
 .event {
-    margin: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: inline-block;
-  }
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: inline-block;
+}
+
 .event.finished {
-    background-color: #474a51;
+  background-color: #474a51;
 }
