@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Обед', start: '13:00', end: '14:00' },
         { name: 'Работа', start: '14:00', end: '18:00' },
         { name: 'Дорога домой', start: '18:00', end: '19:00' },
-        { name: 'Сон', start: '00:00', end: '08:00' }
+        { name: 'Сон', start: '23:00', end: '08:00' }
         // Добавьте свои события здесь
     ];
 
@@ -44,14 +44,14 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (now >= eventStart && now <= eventEnd) {
                 // Текущее событие
                 eventElement.innerHTML = `
-                    <span class="event-status">${event.start} - ${event.end}</span>
-                    <span class="event-name">${event.name}</span>  
+                    <span class="event-status" style="color: #8ffe09">${event.start} - ${event.end}</span>
+                    <span class="event-name" style="color: #8ffe09">${event.name}</span>  
                 `;
             } else {
                 // Прошедшее событие
                 eventElement.innerHTML = `
-                    <span class="event-status">${event.start} - ${event.end}</span>
-                    <span class="event-name">${event.name}</span>
+                    <span class="event-status" style="color: #808080">${event.start} - ${event.end}</span>
+                    <span class="event-name" style="color: #808080">${event.name}</span>
                     
                 `;
             }
@@ -126,7 +126,7 @@ function getCurrentEvent(now) {
         { name: 'До конца обеда', start: '13:00', end: '14:00' },
         { name: 'До конца работы', start: '14:00', end: '18:00' },
         { name: 'До дома', start: '18:00', end: '19:00' },
-        { name: 'До сна', start: '00:00', end: '08:00' }
+        { name: 'До сна', start: '23:00', end: '08:00' }
         // Добавьте свои события здесь
     ];
 
