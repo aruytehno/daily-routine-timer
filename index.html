@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расписание дня</title>
+</head>
+
+<body>
+    <h1>Расписание дня</h1>
+
+    <div id="countdown"></div>
+
+    <script>
+        // Добавляем события дня
+        const schedule = [
+            { event: 'Завтрак', time: 8 },
+            { event: 'Утренняя зарядка', time: 9 },
+            { event: 'Обед', time: 12 },
+            { event: 'Прогулка', time: 15 },
+            { event: 'Ужин', time: 18 },
+            { event: 'Вечерняя прогулка', time: 20 }
+        ];
+
+        // Функция для отображения времени до следующего события
+        function updateCountdown() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            
+            let nextEventTime = null;
+
+            for (let i = 0; i < schedule.length; i++) {
+                if (currentHour < schedule[i].time) {
+                    nextEventTime = schedule[i].time;
+                    break;
+                }
+            }
+
+            if (nextEventTime) {
+                const countdownDate = new Date();
+                countdownDate.setHours(nextEventTime, 0, 0, 0);
+
+                const timeDiff = countdownDate.getTime() - now.getTime();
+                const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById('countdown').textContent = `До следующего события (${schedule.find(event => event.time === nextEventTime).event}) осталось: ${hours} часов ${minutes} минут`;
+            } else {
+                document.getElementById('countdown').textContent = 'Сегодня больше событий не запланировано.';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 60000); // Обновляем таймер каждую минуту
+    </script>
+</head>
+
+<body>
+</html>
