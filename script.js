@@ -102,21 +102,11 @@ var requestAnimationFrame = (function() {
 tick();
 
 function tick() {
-
-  var now = new Date()
-    , elapsed = now - startDate
-    , parts = [];
-
-  parts[0] = '' + Math.floor( elapsed / one_hour );
-  parts[1] = '' + Math.floor( (elapsed % one_hour) / one_minute );
-  parts[2] = '' + Math.floor( ( (elapsed % one_hour) % one_minute ) / one_second );
-
-  parts[0] = (parts[0].length == 1) ? '0' + parts[0] : parts[0];
-  parts[1] = (parts[1].length == 1) ? '0' + parts[1] : parts[1];
-  parts[2] = (parts[2].length == 1) ? '0' + parts[2] : parts[2];
-
-  face.innerText = parts.join(':');
-  
-  requestAnimationFrame(tick);
-  
+    const now = new Date();
+    const elapsed = now - startDate;
+    const hours = Math.floor(elapsed / one_hour).toString().padStart(2, '0');
+    const minutes = Math.floor((elapsed % one_hour) / one_minute).toString().padStart(2, '0');
+    const seconds = Math.floor((elapsed % one_minute) / one_second).toString().padStart(2, '0');
+    face.innerText = `${hours}:${minutes}:${seconds}`;
+    requestAnimationFrame(tick);
 }
