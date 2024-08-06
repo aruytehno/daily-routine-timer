@@ -12,22 +12,25 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
 
     const eventsContainer = document.getElementById('events');
+    const timerElement = document.getElementById('lazy');
+    const eventNameElement = document.getElementById('eventName');
 
     function updateEvents() {
         const now = new Date();
+        const currentEvent = getCurrentEvent(now);
         
         // Очищаем текущий список событий
         eventsContainer.innerHTML = '';
 
-        events.forEach(event => {
+        if (currentEvent) {
             const startTime = new Date();
-            const [startHour, startMinute] = event.start.split(':');
+            const [startHour, startMinute] = currentEvent.start.split(':');
             startTime.setHours(parseInt(startHour, 10));
             startTime.setMinutes(parseInt(startMinute, 10));
             startTime.setSeconds(0);
             
             const endTime = new Date();
-            const [endHour, endMinute] = event.end.split(':');
+            const [endHour, endMinute] = currentEvent.end.split(':');
             endTime.setHours(parseInt(endHour, 10));
             endTime.setMinutes(parseInt(endMinute, 10));
             endTime.setSeconds(0);
@@ -37,25 +40,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 endTime.setDate(endTime.getDate() + 1); // Увеличиваем дату на 1, чтобы перейти к следующему дню
             }
 
-            const eventElement = document.createElement('div');
-            eventElement.classList.add('event');
-            
-            if (now < startTime) {
-                // Событие ещё не началось
-                const countdown = Math.floor((startTime - now) / 1000);
-                eventElement.innerHTML = `<strong>${event.name}</strong><br>${event.start}`;
-            } else if (now >= startTime && now <= endTime) {
+            if (now >= startTime && now <= endTime) {
                 // Событие идет в данный момент
                 const countdown = Math.floor((endTime - now) / 1000);
-                eventElement.innerHTML = `<strong>${event.name}</strong><br>Осталось ${formatTime(countdown)}`;
+                timerElement.innerText = formatTime(countdown);
+                eventNameElement.innerText = currentEvent.name;
             } else {
                 // Событие уже завершилось
-                eventElement.classList.add('finished');
-                eventElement.innerHTML = `<strong>${event.name}</strong><br>Завершено`;
+                timerElement.innerText = '00:00:00';
+                eventNameElement.innerText = 'Расписание дня';
             }
-
-            eventsContainer.appendChild(eventElement);
-        });
+        }
     }
 
     function formatTime(seconds) {
@@ -63,11 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const minutes = Math.floor((seconds % 3600) / 60);
         const remainingSeconds = seconds % 60;
 
-        if (hours > 0) {
-            return `${hours}ч ${minutes}м`;
-        } else {
-            return `${minutes}м ${remainingSeconds}с`;
-        }
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
 
     // Обновляем расписание каждую секунду
@@ -77,36 +68,37 @@ document.addEventListener('DOMContentLoaded', function() {
     updateEvents();
 });
 
+function getCurrentEvent(now) {
+    const events = [
+        { name: 'Подъем', start: '08:00', end: '09:00' },
+        { name: 'Дорога до работы', start: '09:00', end: '10:00' },
+        { name: 'Работа', start: '10:00', end: '13:00' },
+        { name: 'Обед', start: '13:00', end: '14:00' },
+        { name: 'Работа', start: '14:00', end: '18:00' },
+        { name: 'Дорога домой', start: '18:00', end: '19:00' },
+        { name: 'Сон', start: '23:59', end: '08:00' }
+        // Добавьте свои события здесь
+    ];
 
+    let currentEvent = null;
 
-var defaults = {}
-  , one_second = 1000
-  , one_minute = one_second * 60
-  , one_hour = one_minute * 60
-  , one_day = one_hour * 24
-  , startDate = new Date()
-  , face = document.getElementById('lazy');
+    events.forEach(event => {
+        const startTime = new Date();
+        const [startHour, startMinute] = event.start.split(':');
+        startTime.setHours(parseInt(startHour, 10));
+        startTime.setMinutes(parseInt(startMinute, 10));
+        startTime.setSeconds(0);
+        
+        const endTime = new Date();
+        const [endHour, endMinute] = event.end.split(':');
+        endTime.setHours(parseInt(endHour, 10));
+        endTime.setMinutes(parseInt(endMinute, 10));
+        endTime.setSeconds(0);
 
-// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-var requestAnimationFrame = (function() {
-  return window.requestAnimationFrame       || 
-         window.webkitRequestAnimationFrame || 
-         window.mozRequestAnimationFrame    || 
-         window.oRequestAnimationFrame      || 
-         window.msRequestAnimationFrame     || 
-         function( callback ){
-           window.setTimeout(callback, 1000 / 60);
-         };
-}());
+        if (now >= startTime && now <= endTime) {
+            currentEvent = event;
+        }
+    });
 
-tick();
-
-function tick() {
-    const now = new Date();
-    const elapsed = now - startDate;
-    const hours = Math.floor(elapsed / one_hour).toString().padStart(2, '0');
-    const minutes = Math.floor((elapsed % one_hour) / one_minute).toString().padStart(2, '0');
-    const seconds = Math.floor((elapsed % one_minute) / one_second).toString().padStart(2, '0');
-    face.innerText = `${hours}:${minutes}:${seconds}`;
-    requestAnimationFrame(tick);
+    return currentEvent;
 }
