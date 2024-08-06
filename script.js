@@ -26,14 +26,20 @@ document.addEventListener('DOMContentLoaded', function() {
             startTime.setMinutes(parseInt(startMinute, 10));
             startTime.setSeconds(0);
             
-            const endTime = new Date(startTime);
+            const endTime = new Date();
             const [endHour, endMinute] = event.end.split(':');
             endTime.setHours(parseInt(endHour, 10));
             endTime.setMinutes(parseInt(endMinute, 10));
             endTime.setSeconds(0);
 
+            // Если endTime меньше startTime, значит это событие проходит через полночь
+            if (endTime < startTime) {
+                endTime.setDate(endTime.getDate() + 1); // Увеличиваем дату на 1, чтобы перейти к следующему дню
+            }
+
             const eventElement = document.createElement('div');
             eventElement.classList.add('event');
+            
             if (now < startTime) {
                 // Событие ещё не началось
                 const countdown = Math.floor((startTime - now) / 1000);
