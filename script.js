@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (now < startTime) {
                 // Событие ещё не началось
                 const countdown = Math.floor((startTime - now) / 1000);
-                eventElement.innerHTML = `<strong>${event.name}</strong><br>Начнется через ${formatTime(countdown)}`;
+                eventElement.innerHTML = `<strong>${event.name}</strong><br>${event.start}`;
             } else if (now >= startTime && now <= endTime) {
                 // Событие идет в данный момент
                 const countdown = Math.floor((endTime - now) / 1000);
