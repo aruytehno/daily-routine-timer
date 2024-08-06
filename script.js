@@ -120,13 +120,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function getCurrentEvent(now) {
     const events = [
-        { name: 'Подъем', start: '08:00', end: '09:00' },
-        { name: 'Дорога до работы', start: '09:00', end: '10:00' },
-        { name: 'Работа', start: '10:00', end: '13:00' },
-        { name: 'Обед', start: '13:00', end: '14:00' },
+        { name: 'До выхода из дома', start: '08:00', end: '09:00' },
+        { name: 'До работы', start: '09:00', end: '10:00' },
+        { name: 'До обеда', start: '10:00', end: '13:00' },
+        { name: 'До конца обеда', start: '13:00', end: '14:00' },
         { name: 'До конца работы', start: '14:00', end: '18:00' },
-        { name: 'Дорога домой', start: '18:00', end: '19:00' },
-        { name: 'Сон', start: '23:59', end: '08:00' }
+        { name: 'До дома', start: '18:00', end: '19:00' },
+        { name: 'До сна', start: '00:00', end: '08:00' }
         // Добавьте свои события здесь
     ];
 
