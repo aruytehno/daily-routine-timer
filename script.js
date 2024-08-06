@@ -56,7 +56,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
         const remainingSeconds = seconds % 60;
-        return `${hours}ч ${minutes}м ${remainingSeconds}с`;
+
+        if (hours > 0) {
+            return `${hours}ч ${minutes}м`;
+        } else {
+            return `${minutes}м ${remainingSeconds}с`;
+        }
     }
 
     // Обновляем расписание каждую секунду
