@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // События для расписания (можно изменить и добавить свои)
     const events = [
         { name: 'Подъем', start: '08:00', end: '09:00' },
         { name: 'Дорога на работу', start: '09:00', end: '10:00' },
@@ -8,51 +7,37 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Работа', start: '14:00', end: '18:00' },
         { name: 'Дорога домой', start: '18:00', end: '19:00' },
         { name: 'Сон', start: '23:00', end: '08:00' }
-        // Добавьте свои события здесь
     ];
 
     const eventsContainer = document.getElementById('events');
     const timerElement = document.getElementById('lazy');
     const eventNameElement = document.getElementById('eventName');
 
-    // Функция для создания и добавления элементов списка событий
     function renderEvents() {
+        eventsContainer.innerHTML = '';
+        const now = new Date();
+
         events.forEach(event => {
+            const eventStart = getTime(event.start, now);
+            const eventEnd = getTime(event.end, now, eventStart);
+
             const eventElement = document.createElement('div');
             eventElement.classList.add('event-item');
 
-            const now = new Date();
-            const eventStart = new Date();
-            const eventEnd = new Date();
-
-            const [startHour, startMinute] = event.start.split(':');
-            eventStart.setHours(parseInt(startHour, 10));
-            eventStart.setMinutes(parseInt(startMinute, 10));
-            eventStart.setSeconds(0);
-
-            const [endHour, endMinute] = event.end.split(':');
-            eventEnd.setHours(parseInt(endHour, 10));
-            eventEnd.setMinutes(parseInt(endMinute, 10));
-            eventEnd.setSeconds(0);
-
             if (now < eventStart) {
-                // Предстоящее событие
                 eventElement.innerHTML = `
                     <span class="event-time">${event.start} - ${event.end}</span>
                     <span class="event-name">${event.name}</span>
                 `;
             } else if (now >= eventStart && now <= eventEnd) {
-                // Текущее событие
                 eventElement.innerHTML = `
                     <span class="event-status" style="color: #8ffe09">${event.start} - ${event.end}</span>
-                    <span class="event-name" style="color: #8ffe09">${event.name}</span>  
+                    <span class="event-name" style="color: #8ffe09">${event.name}</span>
                 `;
             } else {
-                // Прошедшее событие
                 eventElement.innerHTML = `
                     <span class="event-status" style="color: #808080">${event.start} - ${event.end}</span>
                     <span class="event-name" style="color: #808080">${event.name}</span>
-                    
                 `;
             }
 
@@ -60,44 +45,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Функция для обновления текущего события и таймера
     function updateEvents() {
         const now = new Date();
         const currentEvent = getCurrentEvent(now);
-        
+
         if (currentEvent) {
-            const startTime = new Date();
-            const [startHour, startMinute] = currentEvent.start.split(':');
-            startTime.setHours(parseInt(startHour, 10));
-            startTime.setMinutes(parseInt(startMinute, 10));
-            startTime.setSeconds(0);
-            
-            const endTime = new Date();
-            const [endHour, endMinute] = currentEvent.end.split(':');
-            endTime.setHours(parseInt(endHour, 10));
-            endTime.setMinutes(parseInt(endMinute, 10));
-            endTime.setSeconds(0);
+            const endTime = getTime(currentEvent.end, now, getTime(currentEvent.start, now));
 
-            // Если endTime меньше startTime, значит это событие проходит через полночь
-            if (endTime < startTime) {
-                endTime.setDate(endTime.getDate() + 1); // Увеличиваем дату на 1, чтобы перейти к следующему дню
-            }
-
-            if (now >= startTime && now <= endTime) {
-                // Событие идет в данный момент
+            if (now <= endTime) {
                 const countdown = Math.floor((endTime - now) / 1000);
                 timerElement.innerText = formatTime(countdown);
                 eventNameElement.innerText = currentEvent.name;
             } else {
-                // Событие уже завершилось
                 timerElement.innerText = '00:00:00';
                 eventNameElement.innerText = 'Расписание дня';
             }
         } else {
-            // Если текущее событие не определено (например, все события завершились), очищаем таймер
             timerElement.innerText = '00:00:00';
             eventNameElement.innerText = 'Расписание дня';
         }
+    }
+
+    function getTime(timeString, referenceDate, startDate = null) {
+        const [hours, minutes] = timeString.split(':').map(Number);
+        const time = new Date(referenceDate);
+        time.setHours(hours);
+        time.setMinutes(minutes);
+        time.setSeconds(0);
+
+        if (startDate && time < startDate) {
+            time.setDate(time.getDate() + 1);
+        }
+
+        return time;
+    }
+
+    function getCurrentEvent(now) {
+        return events.find(event => {
+            const eventStart = getTime(event.start, now);
+            const eventEnd = getTime(event.end, now, eventStart);
+            return now >= eventStart && now <= eventEnd;
+        });
     }
 
     function formatTime(seconds) {
@@ -108,47 +96,11 @@ document.addEventListener('DOMContentLoaded', function() {
         return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
 
-    // Обновляем расписание каждую секунду
-    setInterval(updateEvents, 1000);
+    setInterval(() => {
+        updateEvents();
+        renderEvents();
+    }, 1000);
 
-    // Инициализируем первоначальное отображение списка событий
     renderEvents();
-
-    // Инициализируем первоначальное отображение текущего события и таймера
     updateEvents();
 });
-
-function getCurrentEvent(now) {
-    const events = [
-        { name: 'До выхода из дома', start: '08:00', end: '09:00' },
-        { name: 'До работы', start: '09:00', end: '10:00' },
-        { name: 'До обеда', start: '10:00', end: '13:00' },
-        { name: 'До конца обеда', start: '13:00', end: '14:00' },
-        { name: 'До конца работы', start: '14:00', end: '18:00' },
-        { name: 'До дома', start: '18:00', end: '19:00' },
-        { name: 'До сна', start: '23:00', end: '08:00' }
-        // Добавьте свои события здесь
-    ];
-
-    let currentEvent = null;
-
-    events.forEach(event => {
-        const startTime = new Date();
-        const [startHour, startMinute] = event.start.split(':');
-        startTime.setHours(parseInt(startHour, 10));
-        startTime.setMinutes(parseInt(startMinute, 10));
-        startTime.setSeconds(0);
-        
-        const endTime = new Date();
-        const [endHour, endMinute] = event.end.split(':');
-        endTime.setHours(parseInt(endHour, 10));
-        endTime.setMinutes(parseInt(endMinute, 10));
-        endTime.setSeconds(0);
-
-        if (now >= startTime && now <= endTime) {
-            currentEvent = event;
-        }
-    });
-
-    return currentEvent;
-}
