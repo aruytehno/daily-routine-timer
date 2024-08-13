@@ -84,22 +84,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateEvents() {
-        const now = new Date();
-        const currentEventData = getCurrentEvent(now);
+    const now = new Date();
+    const { event, endTime } = getCurrentEvent(now);
+    const countdown = Math.floor((endTime - now) / 1000);
 
-        if (currentEventData) {
-            const { event, endTime } = currentEventData;
-            const countdown = Math.floor((endTime - now) / 1000);
-            timerElement.innerText = formatTime(countdown);
-            eventNameElement.innerText = event.timerName;
-            // Обновление заголовка страницы
-            document.title = `${formatTime(countdown)}`;
-        } else {
-            // Нет текущего события
-            timerElement.innerText = '00:00:00';
-            eventNameElement.innerText = 'Расписание дня';
-        }
-    }
+    // Обновляем отображение таймера и названия события
+    timerElement.innerText = formatTime(countdown);
+    eventNameElement.innerText = event.timerName;
+
+    // Обновляем заголовок страницы
+    document.title = `${formatTime(countdown)}`;
+}
+
 
     function formatTime(seconds) {
         const hours = Math.floor(seconds / 3600);
