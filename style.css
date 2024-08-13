@@ -170,11 +170,12 @@ body {
 .face h2 {
   font-weight: 300;
   font-size: 24px;
+  margin: 70px 0 0; /* Отступы для заголовка */
 }
 
 .face p {
   border-radius: 20px;
-  font-size: 36px;
+  font-size: 60px;
   font-weight: 400;
   position: absolute;
   top: 17px;
