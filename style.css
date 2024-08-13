@@ -91,7 +91,7 @@ body {
 }
 
 .timer.hour .hand span {
-  animation-duration: 3600s;
+  animation-duration: 43200s; /* 12 часов */
   border-top-color: rgba(255, 0, 255, .4);
   border-right-color: rgba(255, 0, 255, .4);
   border-width: 200px;
@@ -113,7 +113,7 @@ body {
 }
 
 .timer.minute .hand span {
-  animation-duration: 60s;
+  animation-duration: 3600s; /* 60 минут */
   border-top-color: rgba(0, 255, 255, .4);
   border-right-color: rgba(0, 255, 255, .4);
   border-width: 175px;
@@ -135,43 +135,44 @@ body {
 }
 
 .timer.second .hand span {
-  animation-duration: 1s;
+  animation-duration: 60s; /* 60 секунд */
   border-top-color: rgba(255, 255, 255, .15);
   border-right-color: rgba(255, 255, 255, .15);
   border-width: 150px;
 }
 
 .timer.second:after {
-  height: 296px;
-  left: 2px;
-  width: 296px;
-  top: 2px;
+  height: 260px;
+  left: 20px;
+  width: 260px;
+  top: 20px;
 }
 
 .face {
   background: rgba(0, 0, 0, .1);
   border-radius: 50%;
-  height: 296px;
-  left: 52px;
-  padding: 165px 40px 0;
+  height: 220px;
+  left: 90px;
+  padding: 85px 40px 0;
   position: absolute;
-  width: 296px;
+  width: 220px;
   text-align: center;
-  top: 52px;
+  top: 90px;
 }
 
 .face h2 {
-  font-weight: 300; 
+  font-weight: 300;
+  font-size: 24px;
 }
 
 .face p {
   border-radius: 20px;
-  font-size: 76px;
+  font-size: 36px;
   font-weight: 400;
   position: absolute;
   top: 17px;
   width: 260px;
-  left: 20px;
+  left: -20px;
 }
 
 @keyframes spin1 {
@@ -198,14 +199,23 @@ body {
   }
 }
 
-.event {
-  margin: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  display: inline-block;
+.event-list {
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: left;
 }
 
-.event.finished {
-  background-color: #474a51;
+.event-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #555;
+}
+
+.event-item:last-child {
+  border-bottom: none;
+}
+
+.event-time, .event-status, .event-name {
+  font-size: 18px;
 }
