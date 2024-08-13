@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Массив событий без жестко заданного времени
     const events = [
         { name: 'Подъем', duration: 60, timerName: 'До выхода из дома' }, // 60 минут
         { name: 'Дорога на работу', duration: 60, timerName: 'До работы' }, // 60 минут
@@ -15,11 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const timerElement = document.getElementById('lazy');
     const eventNameElement = document.getElementById('eventName');
     const startTimeInput = document.getElementById('startTimeInput');
-    const setStartTimeBtn = document.getElementById('setStartTimeBtn');
 
     let startOfDay;
 
-    setStartTimeBtn.addEventListener('click', () => {
+    // Обработчик события изменения времени
+    startTimeInput.addEventListener('change', () => {
         const [hours, minutes] = startTimeInput.value.split(':').map(Number);
         startOfDay = new Date();
         startOfDay.setHours(hours, minutes, 0, 0);
@@ -84,34 +83,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateEvents() {
-    const now = new Date();
-    const { event, endTime } = getCurrentEvent(now);
-    const countdown = Math.floor((endTime - now) / 1000);
+        const now = new Date();
+        const { event, endTime } = getCurrentEvent(now);
+        const countdown = Math.floor((endTime - now) / 1000);
 
-    // Обновляем отображение таймера и названия события
-    timerElement.innerText = formatTime(countdown);
-    eventNameElement.innerText = event.timerName;
+        // Обновляем отображение таймера и названия события
+        timerElement.innerText = formatTime(countdown);
+        eventNameElement.innerText = event.timerName;
 
-    // Обновляем заголовок страницы
-    document.title = `${formatTime(countdown)}`;
+        // Обновляем заголовок страницы
+        document.title = `${formatTime(countdown)}`;
 
-// Получите корневой элемент документа
-const root = document.documentElement;
+        // Получите корневой элемент документа
+        const root = document.documentElement;
 
-// Установите новые значения для переменных CSS
-function updateTimerDurations(hourDuration, minuteDuration, secondDuration) {
-  root.style.setProperty('--hour-duration', hourDuration);
-  root.style.setProperty('--minute-duration', minuteDuration);
-  root.style.setProperty('--second-duration', secondDuration);
-}
+        // Установите новые значения для переменных CSS
+        function updateTimerDurations(hourDuration, minuteDuration, secondDuration) {
+            root.style.setProperty('--hour-duration', hourDuration);
+            root.style.setProperty('--minute-duration', minuteDuration);
+            root.style.setProperty('--second-duration', secondDuration);
+        }
 
-// Пример вызова функции с новыми значениями
-updateTimerDurations('3600s', '60s', '1s'); // Установите новые значения
-
-
-
-}
-
+        // Пример вызова функции с новыми значениями
+        updateTimerDurations('3600s', '60s', '1s'); // Установите новые значения
+    }
 
     function formatTime(seconds) {
         const hours = Math.floor(seconds / 3600);
@@ -121,6 +116,15 @@ updateTimerDurations('3600s', '60s', '1s'); // Установите новые �
         return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
 
+    // Инициализируем начальные значения, если время уже установлено
+    if (startTimeInput.value) {
+        const [hours, minutes] = startTimeInput.value.split(':').map(Number);
+        startOfDay = new Date();
+        startOfDay.setHours(hours, minutes, 0, 0);
+        renderEvents();
+        updateEvents();
+    }
+
     // Обновляем расписание и таймер каждую секунду
     setInterval(() => {
         if (startOfDay) {
@@ -128,7 +132,4 @@ updateTimerDurations('3600s', '60s', '1s'); // Установите новые �
             updateEvents();
         }
     }, 1000);
-
-    // Инициализируем начальные значения
-    setStartTimeBtn.click();
 });
