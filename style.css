@@ -227,3 +227,61 @@ body {
 .event-time, .event-status, .event-name {
   font-size: 18px;
 }
+
+/* Основные стили для контейнера формы */
+.time-form-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Расстояние между элементами */
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  width: fit-content;
+}
+
+/* Стили для метки */
+.time-form-container label {
+  font-size: 12px;
+  font-weight: 400;
+  color: #fff;
+}
+
+/* Стили для поля ввода времени */
+.time-form-container input[type="time"] {
+  padding: 5px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background: #222;
+  color: #fff;
+  font-size: 12px;
+  width: 80px;
+  transition: background-color 0.3s ease;
+}
+
+.time-form-container input[type="time"]:focus {
+  background: #333;
+  border-color: #666;
+  outline: none;
+}
+
+/* Стили для кнопки */
+.time-form-container button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background: #00bcd4;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.time-form-container button:hover {
+  background: #0097a7;
+}
+
+.time-form-container button:focus {
+  outline: none;
+}
