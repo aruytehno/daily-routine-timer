@@ -243,7 +243,7 @@ body {
 
 /* Стили для метки */
 .time-form-container label {
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 400;
   color: #fff;
 }
@@ -256,7 +256,7 @@ body {
   background: #222;
   color: #fff;
   font-size: 12px;
-  width: 80px;
+  width: 52px;
   transition: background-color 0.3s ease;
 }
 
