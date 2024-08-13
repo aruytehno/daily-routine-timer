@@ -4,11 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Подъем', duration: 60, timerName: 'До выхода из дома' }, // 60 минут
         { name: 'Дорога на работу', duration: 60, timerName: 'До работы' }, // 60 минут
         { name: 'Работа', duration: 180, timerName: 'До обеда' }, // 3 часа
-        { name: 'Обед', duration: 60, timerName: 'До конца обеда' },
+        { name: 'Обед', duration: 60, timerName: 'До конца обеда' }, // 1 час
         { name: 'Работа', duration: 240, timerName: 'До конца работы' }, // 4 часа
-        { name: 'Дорога домой', duration: 60, timerName: 'До дома' },
-        { name: 'Отдых', duration: 240, timerName: 'До сна' },
-        { name: 'Сон', duration: 540, timerName: 'До подъема' } // 9 часов
+        { name: 'Дорога домой', duration: 60, timerName: 'До дома' }, // 1 час
+        { name: 'Отдых', duration: 300, timerName: 'До сна' }, // 6 часов
+        { name: 'Сон', duration: 480, timerName: 'До подъема' } // 8 часов
     ];
 
     const eventsContainer = document.getElementById('events');
