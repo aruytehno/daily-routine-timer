@@ -92,6 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const countdown = Math.floor((endTime - now) / 1000);
             timerElement.innerText = formatTime(countdown);
             eventNameElement.innerText = event.timerName;
+            // Обновление заголовка страницы
+            document.title = `${formatTime(countdown)}`;
         } else {
             // Нет текущего события
             timerElement.innerText = '00:00:00';
