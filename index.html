@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Расписание дня</title>
-    <link href="style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet"> <!-- Include your CSS file -->
 </head>
 <body>
     <h1>Расписание дня</h1>
+
+    <!-- Форма для установки времени начала дня -->
+    <div>
+        <label for="startTimeInput">Начало дня:</label>
+        <input type="time" id="startTimeInput" value="08:00">
+        <button id="setStartTimeBtn">Установить</button>
+    </div>
+
     <div id="events" class="event-list">
         <!-- События будут добавлены программно -->
     </div>
@@ -31,6 +39,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- Include your JavaScript file -->
 </body>
 </html>
