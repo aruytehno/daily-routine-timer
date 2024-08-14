@@ -87,9 +87,9 @@ body {
 
 .timer.hour {
   background: rgba(0, 0, 0, .3);
-  height: 400px;
+  height: 100%;
   left: 0;
-  width: 400px;
+  width: 100%;
   top: 0;
   box-shadow: inset 0 0 15px rgba(255, 0, 255, 0.5);
 }
@@ -102,18 +102,18 @@ body {
 }
 
 .timer.hour:after {
-  height: 360px;
-  left: 20px;
-  width: 360px;
-  top: 20px;
+  height: 90%;
+  left: 5%;
+  width: 90%;
+  top: 5%;
 }
 
 .timer.minute {
   background: rgba(0, 0, 0, .2);
-  height: 350px;
-  left: 25px;
-  width: 350px;
-  top: 25px;
+  height: 87.5%;
+  left: 6.25%;
+  width: 87.5%;
+  top: 6.25%;
   box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.5);
 }
 
@@ -131,18 +131,18 @@ body {
 }
 
 .timer.minute:after {
-  height: 310px;
-  left: 20px;
-  width: 310px;
-  top: 20px;
+  height: 88%;
+  left: 6%;
+  width: 88%;
+  top: 6%;
 }
 
 .timer.second {
   background: rgba(0, 0, 0, .2);
-  height: 300px;
-  left: 50px;
-  width: 300px;
-  top: 50px;
+  height: 75%;
+  left: 12.5%;
+  width: 75%;
+  top: 12.5%;
   box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
