@@ -26,6 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
         updateEvents();
     });
 
+    /**
+     * Функция для получения времени начала и конца события.
+     * @param {Object} event - Объект события с длительностью и другими данными.
+     * @param {Date} referenceDate - Дата, к которой привязано событие.
+     * @param {Date} startTime - Время начала события.
+     * @returns {Object} - Объект с временем начала и окончания события.
+     */
     function getEventTimes(event, referenceDate, startTime) {
         const startTimeCopy = new Date(startTime);
         const endTime = new Date(startTimeCopy.getTime() + event.duration * 60000); // Добавляем длительность события
@@ -33,6 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return { startTime: startTimeCopy, endTime };
     }
 
+    /**
+     * Функция для рендеринга списка событий.
+     */
     function renderEvents() {
         eventsContainer.innerHTML = ''; // Очищаем предыдущие события
         const now = new Date();
@@ -69,6 +79,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    /**
+     * Функция для получения текущего события.
+     * @param {Date} now - Текущее время.
+     * @returns {Object|null} - Объект с текущим событием и временем окончания, или null, если текущее событие не найдено.
+     */
     function getCurrentEvent(now) {
         let currentStartTime = new Date(startOfDay);
 
@@ -82,6 +97,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return null;
     }
 
+    /**
+     * Функция для обновления отображения таймера и названия события.
+     */
     function updateEvents() {
         const now = new Date();
         const { event, endTime } = getCurrentEvent(now);
@@ -98,6 +116,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const root = document.documentElement;
     }
 
+    /**
+     * Функция для форматирования времени в строку в формате ЧЧ:ММ:СС.
+     * @param {number} seconds - Количество секунд.
+     * @returns {string} - Отформатированное время.
+     */
     function formatTime(seconds) {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
