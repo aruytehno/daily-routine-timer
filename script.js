@@ -1,6 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
     let simulatedTime = new Date(); // Начальное время
 
+    // Задаем начальные значения для анимации
+    updateSecondDuration('2s');
+    updateMinuteDuration('3s');
+    updateHourDuration('4s');
+
+    setTimeout(() => {
+        updateSecondDuration('1s');
+    }, 2000);
+
+    setTimeout(() => {
+        updateMinuteDuration('10s');
+    }, 3000);
+
+    setTimeout(() => {
+        updateHourDuration('20s');
+    }, 4000);
+
     // Коэффициент ускорения времени. Например, 8640 ускорит время в 8640 раз, т.е. сутки за 10 секунд
     const accelerationFactor = 1;
 
@@ -144,26 +161,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Обновляем заголовок страницы
             document.title = `${formatTime(countdown)}`;
-
-            // Установите новые значения для переменных CSS
-            updateHourDuration('4s');
-            updateMinuteDuration('3s');
-            updateSecondDuration('2s');
-
-            // Через 2 секунды замедляем секундную стрелку
-            setTimeout(() => {
-                updateSecondDuration('20s');
-            }, 2000);
-
-            // Через 3 секунды замедляем минутную стрелку
-            setTimeout(() => {
-                updateMinuteDuration('30s');
-            }, 3000);
-
-            // Через 4 секунды замедляем часовую стрелку
-            setTimeout(() => {
-                updateHourDuration('40s');
-            }, 4000);
         }
     }
 
