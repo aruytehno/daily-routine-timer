@@ -96,16 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Получите корневой элемент документа
         const root = document.documentElement;
-
-        // Установите новые значения для переменных CSS
-        function updateTimerDurations(hourDuration, minuteDuration, secondDuration) {
-            root.style.setProperty('--hour-duration', hourDuration);
-            root.style.setProperty('--minute-duration', minuteDuration);
-            root.style.setProperty('--second-duration', secondDuration);
-        }
-
-        // Пример вызова функции с новыми значениями
-        updateTimerDurations('3600s', '60s', '1s'); // Установите новые значения
     }
 
     function formatTime(seconds) {
