@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // Пример вызова функции с новыми значениями
-        //  updateTimerDurations('4s', '3s', '2s'); // Установите новые значения
+          updateTimerDurations('4s', '3s', '2s'); // Установите новые значения
         }
     }
 
