@@ -1,5 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const now = new Date(); // Вынесение объявления даты в начало
+    let simulatedTime = new Date(); // Начальное время
+
+    // Коэффициент ускорения времени. Например, 8640 ускорит время в 8640 раз, т.е. сутки за 10 секунд
+    const accelerationFactor = 4000;
+
+    /**
+     * Функция для симуляции времени.
+     * Возвращает текущее время с учетом ускорения.
+     */
+    function simulateTime() {
+        const realElapsed = Date.now() - simulatedTime.getTime(); // Прошло реального времени
+        const simulatedElapsed = realElapsed * accelerationFactor; // Ускоряем прошедшее время
+        return new Date(simulatedTime.getTime() + simulatedElapsed); // Возвращаем новое "ускоренное" время
+    }
 
     const events = [
         { name: 'Подъем', duration: 60, timerName: 'До выхода из дома' }, // 60 минут
@@ -24,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const [hours, minutes] = startTimeInput.value.split(':').map(Number);
         startOfDay = new Date();
         startOfDay.setHours(hours, minutes, 0, 0);
-        renderEvents(now);
-        updateEvents(now);
+        renderEvents();
+        updateEvents();
     });
 
     /**
@@ -44,10 +57,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * Функция для рендеринга списка событий.
-     * @param {Date} now - Текущее время.
      */
-    function renderEvents(now) {
+    function renderEvents() {
         eventsContainer.innerHTML = ''; // Очищаем предыдущие события
+        const now = simulateTime(); // Используем ускоренное время
         let currentStartTime = new Date(startOfDay);
 
         events.forEach(event => {
@@ -101,9 +114,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * Функция для обновления отображения таймера и названия события.
-     * @param {Date} now - Текущее время.
      */
-    function updateEvents(now) {
+    function updateEvents() {
+        const now = simulateTime(); // Используем ускоренное время
         const { event, endTime } = getCurrentEvent(now);
         const countdown = Math.floor((endTime - now) / 1000);
 
@@ -136,15 +149,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const [hours, minutes] = startTimeInput.value.split(':').map(Number);
         startOfDay = new Date();
         startOfDay.setHours(hours, minutes, 0, 0);
-        renderEvents(now);
-        updateEvents(now);
+        renderEvents();
+        updateEvents();
     }
 
     // Обновляем расписание и таймер каждую секунду
     setInterval(() => {
         if (startOfDay) {
-            renderEvents(now);
-            updateEvents(now);
+            renderEvents();
+            updateEvents();
         }
     }, 1000);
 });
