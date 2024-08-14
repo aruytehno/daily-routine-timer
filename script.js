@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const now = new Date(); // Вынесение объявления даты в начало
+
     const events = [
         { name: 'Подъем', duration: 60, timerName: 'До выхода из дома' }, // 60 минут
         { name: 'Дорога на работу', duration: 60, timerName: 'До работы' }, // 60 минут
@@ -22,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const [hours, minutes] = startTimeInput.value.split(':').map(Number);
         startOfDay = new Date();
         startOfDay.setHours(hours, minutes, 0, 0);
-        renderEvents();
-        updateEvents();
+        renderEvents(now);
+        updateEvents(now);
     });
 
     /**
@@ -42,10 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * Функция для рендеринга списка событий.
+     * @param {Date} now - Текущее время.
      */
-    function renderEvents() {
+    function renderEvents(now) {
         eventsContainer.innerHTML = ''; // Очищаем предыдущие события
-        const now = new Date();
         let currentStartTime = new Date(startOfDay);
 
         events.forEach(event => {
@@ -99,9 +101,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * Функция для обновления отображения таймера и названия события.
+     * @param {Date} now - Текущее время.
      */
-    function updateEvents() {
-        const now = new Date();
+    function updateEvents(now) {
         const { event, endTime } = getCurrentEvent(now);
         const countdown = Math.floor((endTime - now) / 1000);
 
@@ -134,15 +136,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const [hours, minutes] = startTimeInput.value.split(':').map(Number);
         startOfDay = new Date();
         startOfDay.setHours(hours, minutes, 0, 0);
-        renderEvents();
-        updateEvents();
+        renderEvents(now);
+        updateEvents(now);
     }
 
     // Обновляем расписание и таймер каждую секунду
     setInterval(() => {
         if (startOfDay) {
-            renderEvents();
-            updateEvents();
+            renderEvents(now);
+            updateEvents(now);
         }
     }, 1000);
 });
