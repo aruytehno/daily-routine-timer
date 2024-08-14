@@ -10,6 +10,7 @@ html {
   color: #fff;
   font-family: 'Yanone Kaffeesatz', sans-serif;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  overflow-x: hidden; /* Отключаем горизонтальную прокрутку */
 }
 
 body {
@@ -22,14 +23,16 @@ body {
   margin: 0 auto;
   position: relative;
   width: 400px;
+  margin-top: 20px; /* Отступ сверху для мобильных устройств */
 }
 
+/* Основные стили для таймера */
 .timer {
   border-radius: 50%;
-  height: 100px;
+  height: 25vw; /* Высота в процентах от ширины контейнера */
   overflow: hidden;
   position: absolute;
-  width: 100px;
+  width: 25vw; /* Ширина в процентах от ширины контейнера */
 }
 
 .timer:after {
@@ -37,11 +40,11 @@ body {
   border-radius: 50%;
   content: "";
   display: block;
-  height: 80px;
-  left: 10px;
+  height: 20vw; /* Высота в процентах от ширины таймера */
+  left: 2.5vw;
   position: absolute;
-  width: 80px;
-  top: 10px;
+  width: 20vw; /* Ширина в процентах от ширины таймера */
+  top: 2.5vw;
 }
 
 .timer .hand {
@@ -85,6 +88,7 @@ body {
   animation-name: spin2;
 }
 
+/* Стили для часовой стрелки */
 .timer.hour {
   background: rgba(0, 0, 0, .3);
   height: 100%;
@@ -118,16 +122,16 @@ body {
 }
 
 :root {
-  --hour-duration: 3600s;  /* 12 часов */
-  --minute-duration: 60s;    /* 1 минута */
-  --second-duration: 1s;     /* 1 секунда */
+  --hour-duration: 43200s;  /* 12 часов */
+  --minute-duration: 3600s;    /* 1 час */
+  --second-duration: 60s;     /* 1 минута */
 }
 
 .timer.minute .hand span {
   animation-duration: var(--minute-duration);
   border-top-color: rgba(0, 255, 255, .6);
   border-right-color: rgba(0, 255, 255, .6);
-  border-width: 175px;
+  border-width: 175px; /* 43.75%; */
 }
 
 .timer.minute:after {
@@ -137,6 +141,7 @@ body {
   top: 6%;
 }
 
+/* Стили для секундной стрелки */
 .timer.second {
   background: rgba(0, 0, 0, .2);
   height: 75%;
@@ -150,7 +155,7 @@ body {
   animation-duration: var(--second-duration);
   border-top-color: rgba(255, 255, 255, .15);
   border-right-color: rgba(255, 255, 255, .15);
-  border-width: 150px;
+  border-width: 150px; /* 37.5%; */
 }
 
 .timer.second:after {
