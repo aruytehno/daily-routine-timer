@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     let simulatedTime = new Date(); // Начальное время
 
-    // Задаем начальные значения для анимации
+    // Задаем начальные значения для анимации при первичной загрузке
     updateSecondDuration('2s');
     updateMinuteDuration('3s');
     updateHourDuration('4s');
