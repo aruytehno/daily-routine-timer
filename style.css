@@ -102,6 +102,7 @@ body {
   animation-duration: var(--hour-duration);
   border-top-color: rgba(255, 0, 255, .6);
   border-right-color: rgba(255, 0, 255, .6);
+  transition: transform 1s ease-in-out; /* Плавный переход между изменениями */
   border-width: 200px;
 }
 
@@ -123,14 +124,18 @@ body {
 
 :root {
   --hour-duration: 43200s;  /* 12 часов */
-  --minute-duration: 3600s;    /* 1 час */
-  --second-duration: 60s;     /* 1 минута */
+  --minute-duration: 3600s; /* 1 час */
+  --second-duration: 60s;   /* 1 минута */
+  --hour-angle: 0deg;
+  --minute-angle: 0deg;
+  --second-angle: 0deg;
 }
 
 .timer.minute .hand span {
   animation-duration: var(--minute-duration);
   border-top-color: rgba(0, 255, 255, .6);
   border-right-color: rgba(0, 255, 255, .6);
+    transition: transform 1s ease-in-out; /* Плавный переход между изменениями */
   border-width: 175px; /* 43.75%; */
 }
 
@@ -155,6 +160,7 @@ body {
   animation-duration: var(--second-duration);
   border-top-color: rgba(255, 255, 255, .15);
   border-right-color: rgba(255, 255, 255, .15);
+  transition: transform 1s ease-in-out; /* Плавный переход между изменениями */
   border-width: 150px; /* 37.5%; */
 }
 

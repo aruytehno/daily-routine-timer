@@ -4,10 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Коэффициент ускорения времени. Например, 8640 ускорит время в 8640 раз, т.е. сутки за 10 секунд
     const accelerationFactor = 1;
 
-    /**
-     * Функция для симуляции времени.
-     * Возвращает текущее время с учетом ускорения.
-     */
+    // Функция для симуляции времени
     function simulateTime() {
         const realElapsed = Date.now() - simulatedTime.getTime(); // Прошло реального времени
         const simulatedElapsed = realElapsed * accelerationFactor; // Ускоряем прошедшее время
@@ -51,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function getEventTimes(event, referenceDate, startTime) {
         const startTimeCopy = new Date(startTime);
         const endTime = new Date(startTimeCopy.getTime() + event.duration * 60000); // Добавляем длительность события
-
         return { startTime: startTimeCopy, endTime };
     }
 
@@ -119,9 +115,21 @@ document.addEventListener('DOMContentLoaded', function() {
         return null;
     }
 
-    /**
-     * Функция для обновления отображения таймера и названия события.
-     */
+    function updateHourDuration(hourDuration) {
+        const root = document.documentElement;
+        root.style.setProperty('--hour-duration', hourDuration);
+    }
+
+    function updateMinuteDuration(minuteDuration) {
+        const root = document.documentElement;
+        root.style.setProperty('--minute-duration', minuteDuration);
+    }
+
+    function updateSecondDuration(secondDuration) {
+        const root = document.documentElement;
+        root.style.setProperty('--second-duration', secondDuration);
+    }
+
     function updateEvents() {
         const now = simulateTime(); // Используем ускоренное время
         const currentEvent = getCurrentEvent(now);
@@ -137,18 +145,25 @@ document.addEventListener('DOMContentLoaded', function() {
             // Обновляем заголовок страницы
             document.title = `${formatTime(countdown)}`;
 
-            // Получите корневой элемент документа
-            const root = document.documentElement;
-
             // Установите новые значения для переменных CSS
-            function updateTimerDurations(hourDuration, minuteDuration, secondDuration) {
-                root.style.setProperty('--hour-duration', hourDuration);
-                root.style.setProperty('--minute-duration', minuteDuration);
-                root.style.setProperty('--second-duration', secondDuration);
-            }
+            updateHourDuration('4s');
+            updateMinuteDuration('3s');
+            updateSecondDuration('2s');
 
-            // Пример вызова функции с новыми значениями
-          updateTimerDurations('4s', '3s', '2s'); // Установите новые значения
+            // Через 2 секунды замедляем секундную стрелку
+            setTimeout(() => {
+                updateSecondDuration('20s');
+            }, 2000);
+
+            // Через 3 секунды замедляем минутную стрелку
+            setTimeout(() => {
+                updateMinuteDuration('30s');
+            }, 3000);
+
+            // Через 4 секунды замедляем часовую стрелку
+            setTimeout(() => {
+                updateHourDuration('40s');
+            }, 4000);
         }
     }
 
