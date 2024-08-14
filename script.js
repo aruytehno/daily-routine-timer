@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let simulatedTime = new Date(); // Начальное время
 
     // Коэффициент ускорения времени. Например, 8640 ускорит время в 8640 раз, т.е. сутки за 10 секунд
-    const accelerationFactor = 4000;
+    const accelerationFactor = 1;
 
     /**
      * Функция для симуляции времени.
@@ -109,6 +109,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 return { event, endTime };
             }
         }
+
+        // Если текущее время превышает конец последнего события, начать цикл заново
+        if (now > currentStartTime) {
+            startOfDay.setDate(startOfDay.getDate() + 1); // Увеличиваем день на 1
+            return getCurrentEvent(now); // Рекурсивно вызываем функцию, чтобы получить новое событие
+        }
+
         return null;
     }
 
@@ -117,18 +124,19 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function updateEvents() {
         const now = simulateTime(); // Используем ускоренное время
-        const { event, endTime } = getCurrentEvent(now);
-        const countdown = Math.floor((endTime - now) / 1000);
+        const currentEvent = getCurrentEvent(now);
 
-        // Обновляем отображение таймера и названия события
-        timerElement.innerText = formatTime(countdown);
-        eventNameElement.innerText = event.timerName;
+        if (currentEvent) {
+            const { event, endTime } = currentEvent;
+            const countdown = Math.floor((endTime - now) / 1000);
 
-        // Обновляем заголовок страницы
-        document.title = `${formatTime(countdown)}`;
+            // Обновляем отображение таймера и названия события
+            timerElement.innerText = formatTime(countdown);
+            eventNameElement.innerText = event.timerName;
 
-        // Получите корневой элемент документа
-        const root = document.documentElement;
+            // Обновляем заголовок страницы
+            document.title = `${formatTime(countdown)}`;
+        }
     }
 
     /**
